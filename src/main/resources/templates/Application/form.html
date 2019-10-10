@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="find">
+    输入需要查找的用户id：<br/>
+    id:<input type="text" v-model="userId"/><br/>
+    <input type="button" @Click="findUser" value="点我查找"/>
+</div>
+<script>
+    var findVue = new Vue({
+        el:"#find",
+        data:{
+            userId:""
+        },
+        methods:{
+            findUser:function(){
+                var id = this.userId;
+                if(/\D/.test(id)){
+                    alert("只能输入数字");
+                    this.userId = "";
+                    return;
+                }
+                $.ajax({
+                    url:"/user/findUser",
+                    type:"get",
+                    data:{userId:id},
+                    contentType:"application/json",
+                    success:function(data){
+                        alert(data);
+                    }
+                })
+            }
+        }
+    })
+
+</script>
+</body>
+</html>
